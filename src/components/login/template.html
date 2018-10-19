@@ -1,3 +1,14 @@
-<div>
-  <h1>Login 这是一个模板</h1>
+<div class="from">
+  <h1>这是 Login 模板</h1>
+  <form @submit.prevent="handelLogin">
+    <div>
+      <label for="usermane">用户名：</label>
+      <input type="text" id="usermane" v-model="loginFrom.username">
+    </div>
+    <div>
+      <label for="password">密&nbsp;&nbsp;码：</label>
+      <input type="text" id="password" v-model="loginFrom.password">
+    </div>
+    <input type="submit" value="点击登录">
+  </form>
 </div>

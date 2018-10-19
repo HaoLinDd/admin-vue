@@ -1,3 +1,20 @@
 h1 {
   color: teal;
 }
+.from {
+  display: block;
+  width: 400px;
+  height: 100px;
+  margin: 20px auto;
+  text-align: center;
+  line-height: 100px;
+}
+.from form {
+  padding: 10px 5px;
+  border: 1px solid teal;
+  border-radius: 5px;
+  color: #41b883;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: rgb(251, 252, 253)
+}
