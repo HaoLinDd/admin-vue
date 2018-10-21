@@ -1,6 +1,18 @@
-<div class="from">
-  <h1>这是 Login 模板</h1>
-  <form @submit.prevent="handelLogin">
+<div class="login-warp">
+  <el-form :rules='rules' :model='loginForm' ref='loginForm' class='container'>
+    <div class="userInfo">
+      <el-form-item prop="username">
+        <el-input v-model='loginForm.username' placeholder='账号'></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input type='password' v-model='loginForm.password' placeholder='密码'></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type='primary' class='btn' @click='loginSubmit'>登录</el-button>
+      </el-form-item>
+    </div>
+  </el-form>
+  <!-- <form @submit.prevent="handelLogin">
     <div>
       <label for="usermane">用户名：</label>
       <input type="text" id="usermane" v-model="loginFrom.username">
@@ -10,5 +22,5 @@
       <input type="text" id="password" v-model="loginFrom.password">
     </div>
     <input type="submit" value="点击登录">
-  </form>
+  </form> -->
 </div>
