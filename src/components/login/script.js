@@ -17,7 +17,8 @@ export default {
           const { data, meta } = res.data
           const { msg, status } = meta
           if (status === 200) {
-            window.alert(data)
+            console.log(data)
+            this.$router.push('/')
           } else if (status === 400) {
             window.alert(msg)
           }
