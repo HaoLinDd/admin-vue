@@ -23,7 +23,12 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const { path } = to
   if (path !== '/login') {
-    console.log('校验登录状态')
+    const token = window.localStorage.getItem('token')
+    if ( !token ) {
+      next('/login')
+    } else {
+      next()
+    }
   } else {
     next()
   }

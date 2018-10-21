@@ -16,8 +16,8 @@ export default {
         .then(res => {
           const { data, meta } = res.data
           const { msg, status } = meta
+          window.localStorage.setItem('token', data.token)
           if (status === 200) {
-            console.log(data)
             this.$router.push('/')
           } else if (status === 400) {
             window.alert(msg)
