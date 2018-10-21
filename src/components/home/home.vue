@@ -9,7 +9,7 @@
 import Login from '../login/login'
 
 export default {
-  components:{
+  components: {
     Login
   }
 
@@ -21,4 +21,3 @@ h1 {
 color: teal;
 }
 </style>
-
