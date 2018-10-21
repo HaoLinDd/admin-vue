@@ -5,7 +5,7 @@ import Home from '@/components/home/home'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -19,3 +19,13 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const { path } = to
+  if (path !== '/login') {
+    console.log('校验登录状态')
+  } else {
+    next()
+  }
+})
+export default router
