@@ -1,5 +1,5 @@
 <div class="login-warp">
-  <el-form :rules='rules' :model='loginForm' ref='loginForm' class='container'>
+  <el-form :rules='rules' :model='loginForm' ref='loginForm' status-icon class='container'>
     <div class="userInfo">
       <el-form-item prop="username">
         <el-input v-model='loginForm.username' placeholder='账号'></el-input>
@@ -8,7 +8,7 @@
         <el-input type='password' v-model='loginForm.password' placeholder='密码'></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type='primary' class='btn' @click='handelLogin'>登录</el-button>
+        <el-button type='primary' :plain="true" class='btn' @click="handelLogin('loginForm')">登录</el-button>
       </el-form-item>
     </div>
   </el-form>
