@@ -1,5 +1,17 @@
 .login-warp {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #2f4050;
+}
+.userInfo {
+  width: 50%;
+  border-radius: 15px;
+  padding: 50px 100px 20px 100px;
+  background-color: #fff;
+}
+.btn {
+  width: 100%;
 }

@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     handelLogin () {
-      axios.post('http://localhost:8888/api/private/v1/login', this.loginFrom)
+      axios.post('http://localhost:8888/api/private/v1/login', this.loginForm)
         .then(res => {
           const { data, meta } = res.data
           const { msg, status } = meta
@@ -35,9 +35,6 @@ export default {
     },
     resetForm (formName) {
       this.$refs['loginFrom'].resetFields()
-    },
-    loginSubmit () {
-
     }
   }
 }
