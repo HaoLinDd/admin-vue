@@ -136,7 +136,7 @@ export default {
   background-color: aliceblue;
 }
 .main {
-  background-color: bisque;
+  background-color: #f0f9eb;
 }
 .container, .main, .aside {
   height: 100%;

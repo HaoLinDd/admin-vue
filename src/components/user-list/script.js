@@ -1,23 +1,37 @@
+import axios from 'axios'
+
 export default {
   data () {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: []
     }
+  },
+  methods: {
+    tableRowClassName ({ row, rowIndex }) {
+      if (rowIndex === 1) {
+        return 'warning-row'
+      } else if (rowIndex === 3) {
+        return 'success-row'
+      }
+      return ''
+    }
+  },
+  created () {
+    axios.get('http://localhost:8888/api/private/v1/users', {
+      headers: {
+        Authorization: window.localStorage.getItem('token')
+      },
+      params: {
+        pagenum: 1,
+        pagesize: 5
+      }
+    })
+      .then(res => {
+        console.log(res)
+        const { data, meta } = res.data
+        if (res.status === 200) {
+          this.tableData = data.users
+        }
+      })
   }
 }
