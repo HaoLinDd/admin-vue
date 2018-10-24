@@ -8,7 +8,7 @@
           </el-col>
           <el-col :span="16">电商后台管理系统</el-col>
           <el-col :span="4">
-            <a href="#">退出</a>
+            <a @click.prevent="handelLogout" :plain="true" href="#">退出</a>
           </el-col>
         </el-row>
       </el-header>
@@ -91,6 +91,25 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handelLogout () {
+      this.$confirm('确定要退出登录？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        window.localStorage.removeItem('token')
+        this.$router.push('/login')
+        this.$message({
+          type: 'success',
+          message: '退出成功成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        })
+      })
     }
   }
 }
@@ -101,7 +120,7 @@ export default {
   padding: 0;
   text-align: center;
   color: #fff;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 60px;
   background-color: #35495e;
 }
