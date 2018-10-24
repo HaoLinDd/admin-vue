@@ -64,7 +64,6 @@
           </el-menu>
         </el-aside>
         <el-main class="main">
-          main
           <router-view></router-view>
         </el-main>
       </el-container>
