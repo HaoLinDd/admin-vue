@@ -141,4 +141,7 @@ export default {
 .container, .main, .aside {
   height: 100%;
 }
+.el-submenu__title i {
+  color: #41b883;
+}
 </style>
