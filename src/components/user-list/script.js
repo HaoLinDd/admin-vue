@@ -8,7 +8,31 @@ export default {
     return {
       tableData: [],
       total: 0,
-      searchText: ''
+      searchText: '',
+      dialogFormVisible: false,
+      addUserForm: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      },
+      formRule: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 3, max: 16, message: '密码为 3 - 16 位长度', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱', trigger: 'blur' }
+        ],
+        mobile: [
+          { required: true, message: '请输入手机号', trigger: 'blur' }
+        ]
+      },
+      formLabelWidth: '120px'
     }
   },
   methods: {
@@ -28,15 +52,39 @@ export default {
         }
       })
         .then(res => {
-          const { data, meta } = res.data
+          const { data } = res.data
           if (res.status === 200) {
             this.tableData = data.users
             this.total = data.total
           }
         })
     },
+    // 搜索用户
     handelSearch () {
       this.loadUsersByPage(1)
+    },
+    // 添加用户
+    handleAddUser () {
+      axios({
+        method: 'post',
+        url: 'http://localhost:8888/api/private/v1/users',
+        data: this.addUserForm,
+        headers: {
+          Authorization: window.localStorage.getItem('token')
+        }
+      }).then(res => {
+        const { meta } = res.data
+        if (meta.status === 201) {
+          this.$message({
+            type: 'success',
+            message: '添加用户成功'
+          })
+          // 关闭对话框
+          this.dialogFormVisible = false
+          // 清空表单
+          this.$refs['form'].resetFields()
+        }
+      })
     }
   }
 }

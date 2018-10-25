@@ -1,23 +1,27 @@
 <div>
+  <!-- 面包屑 -->
   <el-row>
     <el-col :span="24">
       <el-breadcrumb separator="/" class="breadrumb">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/users">用户管理</a></el-breadcrumb-item>
         <el-breadcrumb-item>用户列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
   </el-row>
+  <!-- 搜索框 -->
   <el-row class="search-wrap" :gutter="10">
     <el-col :span="6">
       <el-input placeholder="请输入内容" v-model="searchText" class="input-with-select">
         <el-button slot="append" @click="handelSearch" icon="el-icon-search"></el-button>
       </el-input>
     </el-col>
+    <!-- 添加用户 -->
     <el-col :span="4">
-        <el-button type="success" plain>添加用户</el-button>
+        <el-button type="success" @click="dialogFormVisible = true" plain>添加用户</el-button>
     </el-col>
   </el-row>
+  <!-- 数据展示 -->
   <el-table
     :data="tableData "
     style="width: 100%">
@@ -36,7 +40,28 @@
       label="电话"
       width="180">
     </el-table-column>
+    <el-table-column label="状态">
+      <template slot-scope="scope">
+        <el-switch
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
   </el-table>
+  <!-- /数据展示 -->
+  <!-- 数据分页 -->
   <el-pagination
     background
     layout="prev, pager, next"
@@ -44,4 +69,28 @@
     :total="total"
     @current-change="handleCurrentChange">
   </el-pagination>
+  <!-- /数据分页 -->
+
+  <!-- 添加用户对话框 -->
+  <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
+    <el-form ref="form" :model="addUserForm" label-position="left" size="small" :rules="formRule">
+      <el-form-item label="用户名" label-width="80px" prop="username">
+        <el-input v-model="addUserForm.username" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" label-width="80px" prop="password">
+        <el-input v-model="addUserForm.password" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" label-width="80px" prop="email">
+        <el-input v-model="addUserForm.email" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="电话" label-width="80px" prop="mobile">
+        <el-input v-model="addUserForm.mobile" auto-complete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogFormVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleAddUser">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- /添加用户对话框 -->
 </div>
