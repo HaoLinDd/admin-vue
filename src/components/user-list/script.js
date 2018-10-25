@@ -7,7 +7,8 @@ export default {
   data () {
     return {
       tableData: [],
-      total: 0
+      total: 0,
+      searchText: ''
     }
   },
   methods: {
@@ -22,7 +23,8 @@ export default {
         },
         params: {
           pagenum: page,
-          pagesize: 2
+          pagesize: 2,
+          query: this.searchText
         }
       })
         .then(res => {
@@ -32,6 +34,9 @@ export default {
             this.total = data.total
           }
         })
+    },
+    handelSearch () {
+      this.loadUsersByPage(1)
     }
   }
 }
