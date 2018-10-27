@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export default {
   created () {
     this.loadUsersByPage(1)
@@ -57,7 +55,7 @@ export default {
      * 更新数据
      */
     loadUsersByPage (page) {
-      axios.get('http://localhost:8888/api/private/v1/users', {
+      this.$http.get('http://localhost:8888/api/private/v1/users', {
         headers: {
           Authorization: window.localStorage.getItem('token')
         },
@@ -85,7 +83,7 @@ export default {
      * 添加用户
      */
     handleAddUser () {
-      axios({
+      this.$http({
         method: 'post',
         url: 'http://localhost:8888/api/private/v1/users',
         data: this.addUserForm,
@@ -111,7 +109,7 @@ export default {
      * 处理用户状态
      */
     handelChangeState (item) {
-      axios({
+      this.$http({
         url: `http://localhost:8888/api/private/v1/users/${item.id}/state/${item.mg_state}`,
         method: 'put',
         headers: {
@@ -136,7 +134,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        axios({
+        this.$http({
           url: `http://localhost:8888/api/private/v1/users/${item.id}`,
           method: 'delete',
           headers: {
@@ -164,7 +162,7 @@ export default {
      */
     handelEditUser () {
       const { id, email, mobile } = this.editUserForm
-      axios({
+      this.$http({
         url: `http://localhost:8888/api/private/v1/users/${id}`,
         method: 'put',
         data: {
@@ -190,7 +188,7 @@ export default {
      * 显示编辑用户对话框
      */
     handelShowEditUser (item) {
-      axios({
+      this.$http({
         url: `http://localhost:8888/api/private/v1/users/${item.id}`,
         method: 'get',
         headers: {
