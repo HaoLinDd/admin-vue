@@ -54,24 +54,19 @@ export default {
     /**
      * 更新数据
      */
-    loadUsersByPage (page) {
-      this.$http.get('http://localhost:8888/api/private/v1/users', {
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        },
+    async loadUsersByPage (page) {
+      const res = await this.$http.get('/users', {
         params: {
           pagenum: page,
           pagesize: 2,
           query: this.searchText
         }
       })
-        .then(res => {
-          const { data } = res.data
-          if (res.status === 200) {
-            this.tableData = data.users
-            this.total = data.total
-          }
-        })
+      const { data } = res.data
+      if (res.status === 200) {
+        this.tableData = data.users
+        this.total = data.total
+      }
     },
     /**
      * 搜索用户
@@ -85,11 +80,8 @@ export default {
     handleAddUser () {
       this.$http({
         method: 'post',
-        url: 'http://localhost:8888/api/private/v1/users',
-        data: this.addUserForm,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: '/users',
+        data: this.addUserForm
       }).then(res => {
         const { meta } = res.data
         if (meta.status === 201) {
@@ -110,11 +102,8 @@ export default {
      */
     handelChangeState (item) {
       this.$http({
-        url: `http://localhost:8888/api/private/v1/users/${item.id}/state/${item.mg_state}`,
-        method: 'put',
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: `/users/${item.id}/state/${item.mg_state}`,
+        method: 'put'
       }).then(res => {
         const { meta } = res.data
         if (meta.status === 200) {
@@ -135,11 +124,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: `http://localhost:8888/api/private/v1/users/${item.id}`,
-          method: 'delete',
-          headers: {
-            Authorization: window.localStorage.getItem('token')
-          }
+          url: `/users/${item.id}`,
+          method: 'delete'
         }).then(res => {
           const { meta } = res.data
           if (meta.status === 200) {
@@ -163,14 +149,11 @@ export default {
     handelEditUser () {
       const { id, email, mobile } = this.editUserForm
       this.$http({
-        url: `http://localhost:8888/api/private/v1/users/${id}`,
+        url: `/users/${id}`,
         method: 'put',
         data: {
           email,
           mobile
-        },
-        headers: {
-          Authorization: window.localStorage.getItem('token')
         }
       }).then(res => {
         const { meta } = res.data
@@ -189,11 +172,8 @@ export default {
      */
     handelShowEditUser (item) {
       this.$http({
-        url: `http://localhost:8888/api/private/v1/users/${item.id}`,
-        method: 'get',
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: `/users/${item.id}`,
+        method: 'get'
       }).then(res => {
         const { meta, data } = res.data
         if (meta.status === 200) {
