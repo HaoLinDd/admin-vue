@@ -7,10 +7,13 @@ export default {
   data () {
     return {
       tableData: [],
+      // 默认初始页为第一页
       currentPage: 1,
       total: 0,
       searchText: '',
       dialogFormVisible: false,
+      // 编辑对话框
+      editDialogForm: false,
       addUserForm: {
         username: '',
         password: '',
@@ -32,6 +35,11 @@ export default {
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' }
         ]
+      },
+      editUserForm: {
+        username: '',
+        email: '',
+        mobile: ''
       },
       formLabelWidth: '120px'
     }
@@ -95,6 +103,7 @@ export default {
           this.dialogFormVisible = false
           // 清空表单
           this.$refs['form'].resetFields()
+          this.loadUsersByPage(this.currentPage)
         }
       })
     },
@@ -149,6 +158,51 @@ export default {
           })
         })
       })
+    },
+    /**
+     * 编辑用户
+     */
+    handelEditUser () {
+      const { id, email, mobile } = this.editUserForm
+      axios({
+        url: `http://localhost:8888/api/private/v1/users/${id}`,
+        method: 'put',
+        data: {
+          email,
+          mobile
+        },
+        headers: {
+          Authorization: window.localStorage.getItem('token')
+        }
+      }).then(res => {
+        const { meta } = res.data
+        if (meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '更新成功'
+          })
+          this.editDialogForm = false
+          this.loadUsersByPage(this.currentPage)
+        }
+      })
+    },
+    /**
+     * 显示编辑用户对话框
+     */
+    handelShowEditUser (item) {
+      axios({
+        url: `http://localhost:8888/api/private/v1/users/${item.id}`,
+        method: 'get',
+        headers: {
+          Authorization: window.localStorage.getItem('token')
+        }
+      }).then(res => {
+        const { meta, data } = res.data
+        if (meta.status === 200) {
+          this.editUserForm = data
+        }
+      })
+      this.editDialogForm = true
     }
   }
 }

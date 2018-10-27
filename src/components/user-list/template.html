@@ -56,7 +56,7 @@
           plain
           type="primary"
           size="mini"
-          >编辑</el-button>
+          @click="handelShowEditUser(scope.row)">编辑</el-button>
         <el-button
           plain
           size="mini"
@@ -65,8 +65,7 @@
           <el-button 
           plain
           type="info"
-          size="mini" 
-          >分配角色</el-button>
+          size="mini" >分配角色</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -83,7 +82,12 @@
 
   <!-- 添加用户对话框 -->
   <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
-    <el-form ref="form" :model="addUserForm" label-position="left" size="small" :rules="formRule">
+    <el-form 
+    ref="form" 
+    :model="addUserForm" 
+    label-position="left" 
+    size="small" 
+    :rules="formRule">
       <el-form-item label="用户名" label-width="80px" prop="username">
         <el-input v-model="addUserForm.username" auto-complete="off"></el-input>
       </el-form-item>
@@ -103,4 +107,28 @@
     </div>
   </el-dialog>
   <!-- /添加用户对话框 -->
+
+  <!-- 编辑用户对话框 -->
+  <el-dialog title="编辑用户" :visible.sync="editDialogForm">
+    <el-form 
+      ref="editForm" 
+      :model="editUserForm" 
+      label-position="left" 
+      size="small">
+      <el-form-item label="用户名" label-width="80px">
+        <el-input v-model="editUserForm.username" disabled auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" label-width="80px" prop="email">
+        <el-input v-model="editUserForm.email" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="电话" label-width="80px" prop="mobile">
+        <el-input v-model="editUserForm.mobile" auto-complete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="editDialogForm = false">取 消</el-button>
+      <el-button type="primary" @click="handelEditUser">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- /编辑用户对话框 -->
 </div>
