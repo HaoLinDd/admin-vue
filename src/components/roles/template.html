@@ -15,6 +15,44 @@
       ref="singleTable"
       :data="tableData"
       style="width: 100%">
+      <!-- 展开列 -->
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-row v-for="level1 in scope.row.children" class="level1">
+            <el-col :span="2">
+              <el-tag                
+                closable
+                type="">
+                {{ level1.authName }}                
+              </el-tag>
+              <i class="el-icon-arrow-right"></i>
+            </el-col>
+            <el-col :span="22">
+              <el-row v-for="level2 in level1.children" class="level2">
+                <el-col :span="2">
+                  <el-tag                
+                    closable
+                    type="success">
+                    {{ level2.authName }}                  
+                  </el-tag>
+                  <i class="el-icon-arrow-right"></i>
+                </el-col>
+                <el-col :span="22">
+                  <span v-for="level3 in level2.children">
+                      <el-tag                
+                        closable
+                        class="level3"
+                        type="warning">
+                        {{ level3.authName }}
+                      </el-tag>
+                  </span>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
+        </template>
+      </el-table-column>
+      <!-- /展开列 -->
       <el-table-column
         lable="#"
         type="index"
