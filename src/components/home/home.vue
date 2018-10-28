@@ -36,7 +36,7 @@
                 <i class="el-icon-location"></i>
                 <span>权限管理</span>
               </template>
-              <el-menu-item index="2-1">角色列表</el-menu-item>
+              <el-menu-item index="/roles">角色列表</el-menu-item>
               <el-menu-item index="/rights">权限列表</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
@@ -87,10 +87,10 @@ export default {
   },
   methods: {
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     handelLogout () {
       this.$confirm('确定要退出登录？', '提示', {
@@ -120,9 +120,10 @@ export default {
   padding: 0;
   text-align: center;
   color: #fff;
-  font-size: 25px;
+  font-size: 26px;
   line-height: 60px;
   background-color: #35495e;
+  letter-spacing: 2px;
 }
 .header img {
   vertical-align: middle;
@@ -132,6 +133,8 @@ export default {
 }
 .header a {
   color: #fff;
+  font-size: 24px;
+  text-decoration: transparent;
 }
 .aside {
   background-color: aliceblue;
