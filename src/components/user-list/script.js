@@ -77,42 +77,40 @@ export default {
     /**
      * 添加用户
      */
-    handleAddUser () {
-      this.$http({
+    async handleAddUser () {
+      const res = await this.$http({
         method: 'post',
         url: '/users',
         data: this.addUserForm
-      }).then(res => {
-        const { meta } = res.data
-        if (meta.status === 201) {
-          this.$message({
-            type: 'success',
-            message: '添加用户成功'
-          })
-          // 关闭对话框
-          this.dialogFormVisible = false
-          // 清空表单
-          this.$refs['form'].resetFields()
-          this.loadUsersByPage(this.currentPage)
-        }
       })
+      const { meta } = res.data
+      if (meta.status === 201) {
+        this.$message({
+          type: 'success',
+          message: '添加用户成功'
+        })
+        // 关闭对话框
+        this.dialogFormVisible = false
+        // 清空表单
+        this.$refs['form'].resetFields()
+        this.loadUsersByPage(this.currentPage)
+      }
     },
     /**
      * 处理用户状态
      */
-    handelChangeState (item) {
-      this.$http({
+    async handelChangeState (item) {
+      const res = await this.$http({
         url: `/users/${item.id}/state/${item.mg_state}`,
         method: 'put'
-      }).then(res => {
-        const { meta } = res.data
-        if (meta.status === 200) {
-          this.$message({
-            type: 'success',
-            message: `${item.mg_stauts ? '启用' : '禁用'}成功`
-          })
-        }
       })
+      const { meta } = res.data
+      if (meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: `${item.mg_stauts ? '启用' : '禁用'}成功`
+        })
+      }
     },
     /**
      *  删除用户
@@ -122,65 +120,62 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.$http({
+      }).then(async () => {
+        const res = await this.$http({
           url: `/users/${item.id}`,
           method: 'delete'
-        }).then(res => {
-          const { meta } = res.data
-          if (meta.status === 200) {
-            this.$message({
-              type: 'success',
-              message: '已成功删除'
-            })
-            this.loadUsersByPage(this.currentPage)
-          }
-        }).catch(() => {
+        })
+        const { meta } = res.data
+        if (meta.status === 200) {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
+            type: 'success',
+            message: '已成功删除'
           })
+          this.loadUsersByPage(this.currentPage)
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         })
       })
     },
     /**
      * 编辑用户
      */
-    handelEditUser () {
+    async handelEditUser () {
       const { id, email, mobile } = this.editUserForm
-      this.$http({
+      const res = await this.$http({
         url: `/users/${id}`,
         method: 'put',
         data: {
           email,
           mobile
         }
-      }).then(res => {
-        const { meta } = res.data
-        if (meta.status === 200) {
-          this.$message({
-            type: 'success',
-            message: '更新成功'
-          })
-          this.editDialogForm = false
-          this.loadUsersByPage(this.currentPage)
-        }
       })
+      const { meta } = res.data
+      if (meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: '更新成功'
+        })
+        this.editDialogForm = false
+        this.loadUsersByPage(this.currentPage)
+      }
     },
     /**
      * 显示编辑用户对话框
      */
-    handelShowEditUser (item) {
-      this.$http({
+    async handelShowEditUser (item) {
+      const res = await this.$http({
         url: `/users/${item.id}`,
         method: 'get'
-      }).then(res => {
-        const { meta, data } = res.data
-        if (meta.status === 200) {
-          this.editUserForm = data
-        }
       })
-      this.editDialogForm = true
+      const { meta, data } = res.data
+      if (meta.status === 200) {
+        this.editUserForm = data
+        this.editDialogForm = true
+      }
     }
   }
 }
