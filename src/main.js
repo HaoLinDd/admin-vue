@@ -19,7 +19,7 @@ axios.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // Do something with request error
-  return Promise.reject(error);
+  return Promise.reject(error)
 })
 
 Vue.prototype.$http = axios
