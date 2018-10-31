@@ -18,7 +18,7 @@
       <!-- 展开列 -->
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <el-row v-for="level1 in scope.row.children" class="level1">
+          <el-row v-for="level1 in scope.row.children" :key="level1.id" class="level1">
             <el-col :span="2">
               <el-tag                
                 closable
@@ -28,7 +28,7 @@
               <i class="el-icon-arrow-right"></i>
             </el-col>
             <el-col :span="22">
-              <el-row v-for="level2 in level1.children" class="level2">
+              <el-row v-for="level2 in level1.children" :key="level2.id" class="level2">
                 <el-col :span="2">
                   <el-tag                
                     closable
@@ -82,9 +82,31 @@
         <el-button 
           plain
           type="info"
-          size="mini" >分配角色</el-button>
+          size="mini"
+          @click="showRightDialog(scope.row)">分配角色</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- /权限列表 -->
+
+    <!-- 角色列表对话框 -->
+    <el-dialog
+      title="角色授权"
+      :visible.sync="rightDialogVisible"
+      width="30%">
+      <el-tree
+        :data="treeData"
+        ref="rightTree"
+        show-checkbox
+        node-key="id"
+        :default-expand-all="true"
+        :default-checked-keys="defaultChecked"        
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="rightDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handelEditRight">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- /角色列表对话框 -->
   </div>
