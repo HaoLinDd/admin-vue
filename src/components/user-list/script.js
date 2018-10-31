@@ -39,6 +39,12 @@ export default {
         email: '',
         mobile: ''
       },
+      editRoleDialog: false,
+      roles: [],
+      editRoleUser: {
+        username: '',
+        rid: 0
+      },
       formLabelWidth: '120px'
     }
   },
@@ -175,6 +181,47 @@ export default {
       if (meta.status === 200) {
         this.editUserForm = data
         this.editDialogForm = true
+      }
+    },
+    /**
+     * 编辑用户角色
+     */
+    async handelEditRole () {
+      const { id, rid } = this.editRoleUser
+      const res = await this.$http({
+        url: `users/${id}/role`,
+        method: 'put',
+        data: {
+          rid
+        }
+      })
+      const { meta } = res.data
+      if (meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: '分配角色成功'
+        })
+        this.editRoleDialog = false
+      }
+    },
+    /**
+     * 处理显示编辑用户分配角色对话框
+     */
+    async handelShowEditRole (user) {
+      const userRes = await this.$http({
+        url: `/users/${user.id}`
+      })
+      if (userRes.data.meta.status === 200) {
+        this.editRoleUser = userRes.data.data
+      }
+      const res = await this.$http({
+        url: `/roles`,
+        method: 'get'
+      })
+      const { meta, data } = res.data
+      if (meta.status === 200) {
+        this.roles = data
+        this.editRoleDialog = true
       }
     }
   }

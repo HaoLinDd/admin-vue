@@ -65,7 +65,8 @@
           <el-button 
           plain
           type="info"
-          size="mini" >分配角色</el-button>
+          size="mini"
+          @click="handelShowEditRole(scope.row)">分配角色</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -131,4 +132,30 @@
     </div>
   </el-dialog>
   <!-- /编辑用户对话框 -->
+
+  <!-- 分配角色对话框 -->
+  <el-dialog title="分配角色" :visible.sync="editRoleDialog">
+    <el-form 
+      label-position="left" 
+      size="small">
+      <el-form-item label="用户名" label-width="80px">
+        <el-input class="elInputWidth" disabled auto-complete="off" v-model="editRoleUser.username"></el-input>
+      </el-form-item>
+      <el-form-item label="选择角色" label-width="80px">
+        <el-select v-model="editRoleUser.rid" placeholder="请选择">
+          <el-option
+            v-for="item in roles"
+            :key="item.id"
+            :label="item.roleName"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="editRoleDialog = false">取 消</el-button>
+      <el-button type="primary" @click="handelEditRole">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- /分配角色对话框 -->
 </div>
