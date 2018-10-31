@@ -81,6 +81,9 @@ export default {
         this.rightDialogVisible = true
       }
     },
+    /**
+     * 分配角色
+     */
     async handleEditRight () {
       let checkedNodes = this.$refs['rightTree'].getCheckedNodes()
       checkedNodes = checkedNodes.concat(this.$refs['rightTree'].getHalfCheckedNodes())
