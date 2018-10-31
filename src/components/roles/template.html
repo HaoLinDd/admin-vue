@@ -18,11 +18,19 @@
       <!-- 展开列 -->
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <el-row v-for="level1 in scope.row.children" :key="level1.id" class="level1">
+          <el-row v-if="scope.row.children.length===0">
+            <el-col :span="4" class="rightTitle">该角色目前没有权限</el-col>
+          </el-row>
+          <el-row 
+            v-else
+            v-for="level1 in scope.row.children" 
+            :key="level1.id" 
+            class="level1">
             <el-col :span="2">
               <el-tag                
                 closable
-                type="">
+                type=""
+                @close="handleDeleteRight(scope.row, level1)">
                 {{ level1.authName }}                
               </el-tag>
               <i class="el-icon-arrow-right"></i>
@@ -32,20 +40,23 @@
                 <el-col :span="2">
                   <el-tag                
                     closable
-                    type="success">
+                    type="success"
+                    @close="handleDeleteRight(scope.row, level2)"
+                    >
                     {{ level2.authName }}                  
                   </el-tag>
                   <i class="el-icon-arrow-right"></i>
                 </el-col>
                 <el-col :span="22">
-                  <span v-for="level3 in level2.children">
-                      <el-tag                
-                        closable
-                        class="level3"
-                        type="warning">
-                        {{ level3.authName }}
-                      </el-tag>
-                  </span>
+                  <el-tag  
+                    v-for="level3 in level2.children"
+                    :key="level3.id"              
+                    closable
+                    class="level3"
+                    type="warning"
+                    @close="handleDeleteRight(scope.row, level3)">
+                    {{ level3.authName }}
+                  </el-tag>
                 </el-col>
               </el-row>
             </el-col>
@@ -105,7 +116,7 @@
       </el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="rightDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handelEditRight">确 定</el-button>
+        <el-button type="primary" @click="handleDeleteRight">确 定</el-button>
       </span>
     </el-dialog>
     <!-- /角色列表对话框 -->

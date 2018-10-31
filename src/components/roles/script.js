@@ -81,7 +81,7 @@ export default {
         this.rightDialogVisible = true
       }
     },
-    async handelEditRight () {
+    async handleEditRight () {
       let checkedNodes = this.$refs['rightTree'].getCheckedNodes()
       checkedNodes = checkedNodes.concat(this.$refs['rightTree'].getHalfCheckedNodes())
       const tmp = []
@@ -102,6 +102,20 @@ export default {
         this.$message({
           type: 'success',
           message: '更新成功'
+        })
+      }
+    },
+    async handleDeleteRight (role, right) {
+      const res = await this.$http({
+        url: `/roles/${role.id}/rights/${right.id}`,
+        method: 'delete'
+      })
+      const { meta, data } = res.data
+      if (meta.status === 200) {
+        role.children = data
+        this.$message({
+          type: 'success',
+          message: '删除角色成功'
         })
       }
     }
