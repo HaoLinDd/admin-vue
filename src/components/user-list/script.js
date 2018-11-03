@@ -131,18 +131,18 @@ export default {
           url: `/users/${item.id}`,
           method: 'delete'
         })
-        const { meta } = res.data
-        if (meta.status === 200) {
+        const { meta: { status, msg } } = res.data
+        if (status === 200) {
           this.$message({
             type: 'success',
-            message: '已成功删除'
+            message: msg
           })
           this.loadUsersByPage(this.currentPage)
         }
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消删除'
+          message: '删除用户失败'
         })
       })
     },

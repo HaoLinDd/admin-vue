@@ -24,14 +24,19 @@
             background-color="#35495e"
             text-color="#fff"
             active-text-color="#41b883">
-            <el-submenu index="1">
+            <el-submenu :index="level1.path" v-for="level1 in menus" :key="level1.id">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>用户管理</span>
+                <span>{{ level1.authName }}</span>
               </template>
-              <el-menu-item index="/users">用户列表</el-menu-item>
+              <el-menu-item
+                :index="'/' + level2.path"
+                v-for="level2 in level1.children"
+                :key="level2.id">
+                {{level2.authName}}
+              </el-menu-item>
             </el-submenu>
-            <el-submenu index="2">
+            <!-- <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>权限管理</span>
@@ -61,7 +66,7 @@
                 <span>数据统计</span>
               </template>
               <el-menu-item index="5-1">数据报表</el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
           </el-menu>
         </el-aside>
         <el-main class="main">
@@ -76,10 +81,12 @@
 import Login from '../login/login'
 
 export default {
+  created () {
+    this.loadMenus()
+  },
   data () {
     return {
-      value2: 0,
-      value3: 0
+      menus: []
     }
   },
   components: {
@@ -92,6 +99,9 @@ export default {
     handleClose (key, keyPath) {
       // console.log(key, keyPath)
     },
+    /**
+     * 登录
+     */
     handelLogout () {
       this.$confirm('确定要退出登录？', '提示', {
         confirmButtonText: '确定',
@@ -110,6 +120,19 @@ export default {
           message: '已取消退出'
         })
       })
+    },
+    /**
+     * 加载菜单权限列表
+     */
+    async loadMenus () {
+      const res = await this.$http({
+        url: `/menus`,
+        methods: 'get'
+      })
+      const { meta: { status }, data } = res.data
+      if (status === 200) {
+        this.menus = data
+      }
     }
   }
 }
