@@ -2,11 +2,21 @@
   <el-table
     :data="tableData"
     style="width: 100%">
-    <el-table-column
-      prop="cat_name"
-      label="分类名称"
-      width="180">
-    </el-table-column>
+    <el-table-tree-column 
+      fixed :expand-all="!!!1" 
+      file-icon="icon icon-file"  
+      folder-icon="icon icon-folder"
+      prop="cat_name" 
+      label="分类名称" 
+      child-key="children"
+      :show-overflow-tooltip="true" 
+      width="320"
+      treeKey="cat_id"
+      parentKey="cat_pid"
+      levelKey="cat_level"
+      :indent-size="20">
+
+    </el-table-tree-column>
     <el-table-column
       prop="cat_deleted"
       label="是否有效"

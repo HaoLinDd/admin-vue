@@ -6,7 +6,9 @@ import router from './router'
 import store from './store'
 import '@/assets/css/index.css'
 import axios from 'axios'
+import ElTreeGrid from 'element-tree-grid'
 
+Vue.component(ElTreeGrid.name, ElTreeGrid)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
